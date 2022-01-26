@@ -1,0 +1,99 @@
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
+    <div class="payment-method-title field choice">
+        <input type="radio" name="payment[method]" class="radio" data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()" />
+        <label class="label" data-bind="attr: {'for': getCode()}">
+            <span data-bind="text: getTitle()"></span>
+        </label>
+    </div>
+
+    <div class="payment-method-content">
+
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() -->
+        <!-- /ko -->
+        <!--/ko-->
+        <div class="payment-method-billing-address">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+            <!-- ko template: getTemplate() -->
+            <!-- /ko -->
+            <!--/ko-->
+        </div>
+
+
+        <div class="field required">
+            <label data-bind="attr: {for: getCode() + '_transaction_result'}" class="label">
+                <span><!-- ko i18n: 'Transaction Result'--><!-- /ko --></span>
+            </label>
+
+            <div class="control">
+                <select name="payment[transaction_result]" class="select" data-bind="
+                                  options: getTransactionResults(),
+                                  optionsValue: 'value',
+                                  optionsText: 'transaction_result',
+                                  optionsCaption: $t('Transaction Result'),
+                                  value: transactionResult">
+                </select>
+            </div>
+
+        </div>
+
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button class="action primary checkout" type="submit" data-bind="
+                        click: placeOrder,
+                        attr: {title: $t('Place Order')}
+                        ">
+                    <span data-bind="i18n: 'Place Order'"></span>
+                </button>
+            </div>
+        </div>
+
+
+        <form id="ipg_gateway" method="POST" action="https://gatewaybackend-uat.quickteller.co.ke/ipg-backend/api/checkout">
+
+            <input type="hidden" name="merchantCode" value="ISWKEN0001" />
+            <input type="hidden" name="domain" value="ISWKE" />
+            <input type="hidden" name="transactionReference" value="DeChRef_202006112216_fKk" />
+            <input type="hidden" name="orderId" value="DeChOid_202006112216_htr" />
+            <input type="hidden" name="currencyCode" value="KES" />
+            <input type="hidden" data-bind="attr: {value: getGrandTotal()}" name="amount" value="10000" />
+            <input type="hidden" name="terminalId" value="3TLP0001" />
+            <input type="hidden" name="terminalType" value="What?" />
+            <input type="hidden" name="redirectUrl" value="https://uat.quickteller.co.ke/" />
+            <input type="hidden" name="channel" value="WEB" />
+            <input type="hidden" name="narration" value="Test from new gateway" />
+            <input type="hidden" name="fee" value="0" />
+            <input type="hidden" name="preauth" value="10" />
+            <input type="hidden" name="iconUrl" value="" />
+            <input type="hidden" name="providerIconUrl" value="" />
+            <input type="hidden" name="cardTokensJson" value="[{\\panLast4Digits\\:\\1895\\,\\panFirst6Digits\\:\\506183\\,\\token\\:\\C48FA7D7F466914A3E4440DE458AABC1914B9500CC7780BEB4\\,\\expiry\\:\\05/20\\},{\\panLast4Digits\\:\\1111\\,\\panFirst6Digits\\:\\411111\\,\\token\\:\\3105E927EF17A245977CDA0ED62B257E4378592E8D7C7A5272-016153570198200\\,\\expiry\\:\\02/22\\}]"
+            />
+            <input type="hidden" name="field1" value="{\\merchant_merchantDescriptorName\\:\\STANDARD CHARTERED BANK KENYA LIMITED\\,\\merchant_merchantCategoryCode\\:\\4816\\}" />
+            <input type="hidden" name="customerId" value="1002" />
+            <input type="hidden" name="customerFirstName" value="Japheth" />
+            <input type="hidden" name="customerSecondName" value="Ongeri" />
+            <input type="hidden" name="customerEmail" value="japheth.ongeri@interswitchgroup.com" />
+            <input type="hidden" name="customerMobile" value="86-13012345678" />
+            <input type="hidden" name="customerCity" value="NBI" />
+            <input type="hidden" name="customerCountry" value="KE" />
+            <input type="hidden" name="customerPostalCode" value="wstlnds" />
+            <input type="hidden" name="customerStreet" value="1002" />
+            <input type="hidden" name="customerState" value="NBI" />
+            <input type="hidden" name="primaryAccentColor" value="#ff00ff" />
+            <input type="hidden" name="customerInfor" value="1002|Japheth|Ongeri|japheth.ongeri@interswitchgroup.com|86-13012345678|NBI|KE|wstlnds|1002|NBI" />
+
+        </form>
+
+
+
+
+
+
+    </div>
+</div>
